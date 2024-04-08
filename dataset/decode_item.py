@@ -290,7 +290,8 @@ def decode_item(item):
     segs = []
     for anno in item['annos']:
         # anno['image_embedding_before'] = decode_tensor_from_string(anno['image_embedding_before'])
-        anno['text_embedding_before'] = decode_tensor_from_string(anno['text_embedding_before'])
+        if 'text_embedding_before' in anno:
+            anno['text_embedding_before'] = decode_tensor_from_string(anno['text_embedding_before'])
         # anno['image_embedding_after'] = decode_tensor_from_string(anno['image_embedding_after'])
         # anno['text_embedding_after'] = decode_tensor_from_string(anno['text_embedding_after'])
         if "blip_clip_embeddings" in anno:

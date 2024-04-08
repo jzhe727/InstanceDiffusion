@@ -38,14 +38,14 @@ class JsonDataset(Dataset):
 
     def __getitem__(self, idx):
         # Opening JSON file
-        f = open(os.path.join(self.root_dir, self.train_files[idx]))
-        try:
+        with open(os.path.join(self.root_dir, self.train_files[idx])) as f:
+        # try:
             data = json.load(f)
             data = self.decode_func(data)
             f.close()
-        except:
-            # show error message and return None
-            assert 1 == 0, os.path.join(self.root_dir, self.train_files[idx])
+        # except:
+        #     # show error message and return None
+        #     assert 1 == 0, os.path.join(self.root_dir, self.train_files[idx])
         return data
 
 
