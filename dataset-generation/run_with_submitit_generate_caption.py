@@ -28,13 +28,7 @@ def parse_args():
 
 
 def get_shared_folder():
-    user = os.getenv("USER")
-    # the shared folder should be the folder that is visible by all machines / nodes.
-    if Path("/SHARED-FOLDER/").is_dir():
-        p = Path('/SHARED-FOLDER/{}/Grounded-Segment-Anything/submitit'.format(user))
-        p.mkdir(exist_ok=True)
-        return p
-    raise RuntimeError("No shared folder available")
+    return Path("~/diff-502-wheatbb")
 
 
 def get_init_file():

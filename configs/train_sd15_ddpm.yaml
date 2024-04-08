@@ -1,10 +1,5 @@
-diffusion:
-  target: ldm.models.diffusion.ldm.LatentDiffusion
-  params:
-    linear_start: 0.00085
-    linear_end: 0.012
-    timesteps: 1000
-   
+# could try to make this ddpm but ignore for now
+
 model:
   target: ldm.modules.diffusionmodules.openaimodel.UNetModel
   params:
@@ -21,7 +16,7 @@ model:
     fuser_type: gatedSA
     use_checkpoint: True
     sd_v1_5: True # the performance difference between using sd1.5 and sd1.4 is very small
-    efficient_attention: False # True # have not tested this yet
+    efficient_attention: True # have not tested this yet
 
     grounding_tokenizer:
       target: ldm.modules.diffusionmodules.text_grounding_net.UniFusion

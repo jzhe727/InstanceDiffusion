@@ -25,15 +25,8 @@ def parse_args():
     return parser.parse_args()
 
 
-def get_shared_folder() -> Path:
-    user = os.getenv("USER")
-    # the shared folder should be the folder that is visible by all machines / nodes.
-    if Path("/SHARED-FOLDER/").is_dir():
-        p = Path(f"/SHARED-FOLDER/{user}/InstDiff/submitit")
-        p.mkdir(exist_ok=True)
-        return p
-    raise RuntimeError("No shared folder available")
-
+def get_shared_folder():
+    return Path("/home/john.zheng1/diff-502-wheatbb")
 
 def get_init_file():
     # Init file must not exist, but it's parent dir must exist.
@@ -49,6 +42,8 @@ class Trainer(object):
         self.args = args
 
     def __call__(self):
+        import sys
+        sys.path.append('/home/john.zheng1/diff-502-wheatbb/InstanceDiffusion')
         import main_submitit as main
 
         self._setup_gpu_args()
@@ -103,9 +98,8 @@ def main():
         timeout_min=timeout_min, # max is 60 * 72
         # Below are cluster dependent parameters
         slurm_partition=partition,
-        slurm_signal_delay_s=120,
-        slurm_account='muvigen',
-        slurm_qos='muvigen',
+        slurm_signal_delay_s=1,
+        slurm_mem="40GB",
         **kwargs
     )
 

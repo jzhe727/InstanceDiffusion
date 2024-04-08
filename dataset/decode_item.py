@@ -445,7 +445,7 @@ def inv_project(y, projection_matrix):
 
 class decode:
     def __init__(self, which_layer_text='before', 
-                which_layer_image="after_reproject",
+                which_layer_image="after_renorm", # used ot be after_reproject
                 prob_use_caption=1,
                 random_drop_embedding='none',
                 image_size=512, 

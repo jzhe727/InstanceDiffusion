@@ -110,7 +110,7 @@ def main(args):
 
     # set up wandb
     os.environ["WANDB__SERVICE_WAIT"] = "600"
-    if get_rank() == 0:
+    if False:  # get_rank() == 0:
         wandb.init(
             project="InstDiff",
             sync_tensorboard=True,
