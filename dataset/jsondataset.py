@@ -28,6 +28,7 @@ class JsonDataset(Dataset):
             params['random_blip'] = config.random_blip
             params['return_att_masks'] = config.use_masked_att
             params['add_inst_cap_2_global'] = config.add_inst_cap_2_global
+            params['min_box_size'] = 0.0001
 
             self.decode_func = decode(**params)
         else:

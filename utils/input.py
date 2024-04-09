@@ -48,7 +48,7 @@ def prepare_batch(meta, batch=1, max_objs=30, model=None, processor=None, image_
     segs = meta.get("segs")
     points = meta.get("points")
 
-    phrases = [None]*len(phrases) if phrases==None else phrases 
+    phrases = [] if phrases==None else phrases 
 
     boxes, masks, text_masks, text_embeddings, polygons_embeddings, scribbles_embeddings, segs_embeddings, points_embeddings = create_zero_input_tensors(max_objs, n_polygon_points, n_scribble_points)
 
@@ -58,7 +58,7 @@ def prepare_batch(meta, batch=1, max_objs=30, model=None, processor=None, image_
     text_features = []
     for phrase in phrases:
         text_features.append(  get_clip_feature(model, processor, phrase, is_image=False) )
-
+    print(len(meta[locations]), "boxes in prepare_batch")
     for idx, (box, text_feature, polygon, scribble, seg, point) in enumerate(zip( meta['locations'], text_features, polygons, scribbles, segs, points)):
         boxes[idx] = torch.tensor(box)
         masks[idx] = 1

@@ -592,7 +592,7 @@ class decode:
         areas = []
         all_boxes = []
         all_masks = []
-        all_text_embeddings = []
+        # all_text_embeddings = []
         all_obj_captions = []
         all_obj_scribbles = []        
         n_scribble_points = 20 # defined by n_scribble_points in decode_item()
@@ -648,11 +648,11 @@ class decode:
                         draw.ellipse((x-2, y-2, x+2, y+2), fill='blue', outline='blue')
                     img.save("box_scribble_polygons_vis.jpg")
 
-                if 'blip_clip_embeddings' in anno and random.uniform(0, 1) < self.random_blip:
-                    all_text_embeddings.append(anno["blip_clip_embeddings"])
-                    # all_text_embeddings.append((anno["blip_clip_embeddings"] + anno[text_embedding_name])/2)
-                else:
-                    all_text_embeddings.append(anno[text_embedding_name])
+                # if 'blip_clip_embeddings' in anno and random.uniform(0, 1) < self.random_blip:
+                #     all_text_embeddings.append(anno["blip_clip_embeddings"])
+                #     # all_text_embeddings.append((anno["blip_clip_embeddings"] + anno[text_embedding_name])/2)
+                # else:
+                #     all_text_embeddings.append(anno[text_embedding_name])
                 if is_det:
                     all_category_names.append(anno["category_name"])
                     if 'caption' in anno:
@@ -693,7 +693,7 @@ class decode:
             # NOTE: New Seg
             segs[i] = all_obj_segs[idx]
 
-            text_embeddings[i] =  all_text_embeddings[idx]
+            # text_embeddings[i] =  all_text_embeddings[idx]
             if is_det:
                 category_names.append(all_category_names[idx])
                 selected_captions[i] = all_obj_captions[idx]
@@ -733,7 +733,7 @@ class decode:
             out["instance_meta"][i]['masks'][0] = all_masks[idx]
             out["instance_meta"][i]['segs'][0] = all_obj_segs[idx]
             out["instance_meta"][i]["text_masks"][0] = 1
-            out["instance_meta"][i]["text_embeddings"][0] = all_text_embeddings[idx]
+            # out["instance_meta"][i]["text_embeddings"][0] = all_text_embeddings[idx]
             out["instance_meta"][i]["image_masks"][0] = 1
             if self.return_att_masks:
                 out["instance_meta"][i]["att_masks"][0] = att_masks[i]

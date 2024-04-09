@@ -108,6 +108,7 @@ def run(meta, model, autoencoder, text_encoder, diffusion, clip_model, clip_proc
     img_name = os.path.join( output_folder, str(image_ids[0])+'_boxes.png' )
     image_boxes.save( img_name )
     print("saved image with boxes at {}".format(img_name))
+    print(f"{len(meta["locations"])} boxes drawn")
     
     # if use cascade model, we will use SDXL-Refiner to refine the generated images
     if config.cascade_strength > 0:
@@ -132,8 +133,8 @@ def run(meta, model, autoencoder, text_encoder, diffusion, clip_model, clip_proc
 def rescale_box(bbox, width, height):
     x0 = bbox[0]/width
     y0 = bbox[1]/height
-    x1 = (bbox[0]+bbox[2])/width
-    y1 = (bbox[1]+bbox[3])/height
+    x1 = bbox[2]/width
+    y1 = bbox[3]/height
     return [x0, y0, x1, y1]
 
 def get_point_from_box(bbox):
@@ -155,7 +156,7 @@ def draw_boxes(boxes, descriptions=None, caption=None):
     boxes = [ [ int(x*width) for x in box ] for box in boxes]
     for i, box in enumerate(boxes):
         draw.rectangle( ( (box[0], box[1]), (box[2], box[3]) ), outline=(0,0,0), width=2)
-    if descriptions is not None:
+    if descriptions:
         for idx, box in enumerate(boxes):
             draw.text((box[0], box[1]), descriptions[idx], fill="black")
     if caption is not None:
@@ -228,7 +229,8 @@ if __name__ == "__main__":
         if "scribble" in data['annos'][inst_idx]:
             scribbles_list.append(data['annos'][inst_idx]['scribble'])
         # class_names.append(data['annos'][inst_idx]['category_name'])
-        instance_captions.append(data['annos'][inst_idx]['caption'])
+        if 'caption' in data['annos'][inst_idx]:
+            instance_captions.append(data['annos'][inst_idx]['caption'])
         # show_binary_mask(binay_masks[inst_idx])
 
     # END: READ BOXES AND BINARY MASKS
@@ -236,7 +238,9 @@ if __name__ == "__main__":
     img_info['width'] = data['width']
     img_info['height'] = data['height']
 
+    print(img_info['width'], img_info['height'], "width and height of bboxes")
     locations = [rescale_box(box, img_info['width'], img_info['height']) for box in boxes]
+    print("rescaled boxes", locations)
     phrases = instance_captions
 
     # get points for each instance, if not provided, use the center of the box
