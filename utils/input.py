@@ -58,7 +58,7 @@ def prepare_batch(meta, batch=1, max_objs=30, model=None, processor=None, image_
     text_features = []
     for phrase in phrases:
         text_features.append(  get_clip_feature(model, processor, phrase, is_image=False) )
-    print(len(meta[locations]), "boxes in prepare_batch")
+    print(len(meta['locations']), "boxes in prepare_batch")
     for idx, (box, text_feature, polygon, scribble, seg, point) in enumerate(zip( meta['locations'], text_features, polygons, scribbles, segs, points)):
         boxes[idx] = torch.tensor(box)
         masks[idx] = 1
