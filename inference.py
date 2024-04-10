@@ -133,8 +133,8 @@ def run(meta, model, autoencoder, text_encoder, diffusion, clip_model, clip_proc
 def rescale_box(bbox, width, height):
     x0 = bbox[0]/width
     y0 = bbox[1]/height
-    x1 = bbox[2]/width
-    y1 = bbox[3]/height
+    x1 = (bbox[0]+bbox[2])/width
+    y1 = (bbox[1]+bbox[3])/height
     return [x0, y0, x1, y1]
 
 def get_point_from_box(bbox):
