@@ -108,7 +108,7 @@ def run(meta, model, autoencoder, text_encoder, diffusion, clip_model, clip_proc
     img_name = os.path.join( output_folder, str(image_ids[0])+'_boxes.png' )
     image_boxes.save( img_name )
     print("saved image with boxes at {}".format(img_name))
-    print(f"{len(meta["locations"])} boxes drawn")
+    print(f"{len(meta['locations'])} boxes drawn")
     
     # if use cascade model, we will use SDXL-Refiner to refine the generated images
     if config.cascade_strength > 0:
